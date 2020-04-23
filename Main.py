@@ -30,11 +30,7 @@ def main():
                else:
                    new_data = fg.get_fake_tuples(how_many)
                    df = pd.DataFrame(new_data,columns = new_data[0].keys())
-                   print(df.head())
-
-
-
-
+                   df.to_csv(file_name,index=False)
 
 
            except Exception as e:
