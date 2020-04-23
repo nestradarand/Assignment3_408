@@ -31,6 +31,7 @@ def main():
                    new_data = fg.get_fake_tuples(how_many)
                    df = pd.DataFrame(new_data,columns = new_data[0].keys())
                    df.to_csv(file_name,index=False)
+                   print('{rows} rows populated to file {file} successfully!'.format(file = file_name,rows = how_many))
 
 
            except Exception as e:
