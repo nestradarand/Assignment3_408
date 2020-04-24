@@ -30,6 +30,7 @@ class Helper:
         self.c.execute('SELECT SportId '
                        'FROM Sports '
                        'WHERE Sport = %s',(the_sport,))
+
         return self.c.fetchall()[0][0]
 
     def get_user_id(self,new_username):
@@ -42,7 +43,7 @@ class Helper:
         return self.c.fetchall()[0][0]
 
     def insert_new_bet(self,id,new_spend,new_sport,win_status,recorded_date,ended_date,new_description):
-        new_tuple = [id,new_spend,'Baseball',win_status,recorded_date,ended_date,new_description]
+        new_tuple = [id,new_spend,new_sport,win_status,recorded_date,ended_date,new_description]
         self.c.callproc('Insert_New_Bet',new_tuple)
         return True
 

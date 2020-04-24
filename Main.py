@@ -25,15 +25,14 @@ def main():
             try:
                 df = pd.read_csv(file_name)
                 df = df.replace({np.nan: None})
-                print(df.head())
                 for row in df.itertuples():
                     newest_id = db.insert_new_user(row.password,row.lastLogin,row.issuper,row.username,
                                                    row.firstName,row.lastName,row.email,row.isstaff,row.isactive,
                                                    row.dateJoined)
+
                     if newest_id is None:
                         newest_id = db.get_user_id(row.username)
-                    sport_id = db.get_sport_id(row.sport)
-                    db.insert_new_bet(newest_id,row.spent,sport_id,row.won,row.dateRecorded,row.dateEnded,'Description here')
+                    db.insert_new_bet(newest_id,row.spent,row.sport,row.won,row.dateRecorded,row.dateEnded,'Description here')
                 db.close_connections()
                 print('Data Import Successful to {database} database!'.format(database = DATABASE))
 
