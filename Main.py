@@ -57,23 +57,24 @@ def main():
                 #close all connections in the db class
                 db.close_connections()
         #Handles user input and generates data based on input
-        elif action == 'populate':
-           try:
-               how_many = int(input('Enter the number of instances you wish to randomly populate as a whole number:'))
-               if how_many <= 0:
-                   print('You must enter a positive integer to populate the file you specified.')
+        elif action == 'generate':
+            if len(args) > 3:
+                try:
+                    how_many = int(args[3])
+                    if how_many <= 0:
+                       print('You must enter a positive integer to populate the file you specified.')
+                       exit(1)
+                    else:
+                       new_data = fg.get_fake_tuples(how_many)
+                       df = pd.DataFrame(new_data,columns = new_data[0].keys())
+                       df.to_csv(file_name,index=False)
+                       print('{rows} rows generated to file {file} successfully!'.format(file = file_name,rows = how_many))
+                except Exception as e:
+                   print('Invalid input entered, please try again.')
+                   print(e)
                    exit(1)
-               else:
-                   new_data = fg.get_fake_tuples(how_many)
-                   df = pd.DataFrame(new_data,columns = new_data[0].keys())
-                   df.to_csv(file_name,index=False)
-                   print('{rows} rows populated to file {file} successfully!'.format(file = file_name,rows = how_many))
-
-
-           except Exception as e:
-               print('Invalid input entered, please try again.')
-               print(e)
-               exit(1)
+            else:
+                print('Command line parameter missing for number of records to produce')
 
 
 

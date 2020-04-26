@@ -23,6 +23,7 @@ d. THE Rene German
 1.) Pull the repository from git.
 2.) Change directories to the correct directory with Main.py.
 3.) Ensure that correct dependencies are installed (mysql.connector, pandas,Faker)
-4.) Run using the format: python Main.py [option] [filename]
-5.) Option values - populate (create new data to csv), import (used to import all data to normalized db)
-6.) Filename (name of the csv file including extension)
+4.) Run using the format: python Main.py [option] [filename] [number of records*]
+5.) [Option] - generate (create new data to csv), import (used to import all data to normalized db)
+6.) [Filename] (name of the csv file including extension)
+7.) [Number of records] - only needed if populating data to specify how many rows to populate.
