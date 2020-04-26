@@ -1,15 +1,23 @@
+'''
+Name: Noah Estrada-Rand
+Student ID#: 2272490
+Chapman email: estra146@mail.chapman.edu
+Course Number and Section: CPSC-408-01
+Assignment: Assignment 3
+'''
 import sys
 import FakeGenerator as fg
 import pandas as pd
 import numpy as np
 from DbHelper import Helper
 
-##config info
-HOST = '34.83.232.253'
-USER = 'noah_e'
-PASSWORD = 'Chapman1!'
-DATABASE = 'Chapman_2'
+
+'''
+The main method is simply checking for command line arguments and if they are found, either populating data 
+to provided filename or reading in the data from a given file and inserting/normalizing it into my db.
+'''
 def main():
+    #check if command line arguments were give, if not tell the user
     args = sys.argv
     if len(args) <= 2:
         if len(args) <= 1:
@@ -20,27 +28,35 @@ def main():
     else:
         action = args[1].lower()
         file_name = args[2]
+        #handle the import functionality
         if action == 'import':
-            db = Helper(HOST,USER,PASSWORD,DATABASE)
+            db = Helper()
             try:
                 df = pd.read_csv(file_name)
                 df = df.replace({np.nan: None})
+                print('Data found...')
                 print(df.head())
+                print('Importing...')
+                #iterate over all tuples and insert into normalized tables
                 for row in df.itertuples():
+                    #attempt to enter new user
                     newest_id = db.insert_new_user(row.password,row.lastLogin,row.issuper,row.username,
                                                    row.firstName,row.lastName,row.email,row.isstaff,row.isactive,
                                                    row.dateJoined)
+                    #if user exists, get their user id based on their username
                     if newest_id is None:
                         newest_id = db.get_user_id(row.username)
-                    sport_id = db.get_sport_id(row.sport)
-                    db.insert_new_bet(newest_id,row.spent,sport_id,row.won,row.dateRecorded,row.dateEnded,'Description here')
-                db.close_connections()
-                print('Data Import Successful to {database} database!'.format(database = DATABASE))
+                    db.insert_new_bet(newest_id,row.spent,row.sport,row.won,row.dateRecorded,row.dateEnded,'Description here')
+                print('Data Import Successful to {database} database!'.format(database = db.get_database_name()))
 
             except Exception as e:
                 print('There was an error attempting to process specified file.')
                 print(e)
                 exit(1)
+            finally:
+                #close all connections in the db class
+                db.close_connections()
+        #Handles user input and generates data based on input
         elif action == 'populate':
            try:
                how_many = int(input('Enter the number of instances you wish to randomly populate as a whole number:'))
