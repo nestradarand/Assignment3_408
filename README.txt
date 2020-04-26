@@ -9,6 +9,7 @@
 a. Main.py
 b. DbHelper.py
 c. FakeGenerator.py
+d. ddl.sql
 
 3.) Description of any known compile/runtime errors, or bugs.
  a. Error may occur if machine running the script is not registered on the Google Cloud platform
