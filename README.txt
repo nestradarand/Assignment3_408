@@ -21,10 +21,14 @@ c. dev.mysql.com
 d. THE Rene German
 
 5.) Instructions for running Assignment
+
 1.) Pull the repository from git.
 2.) Change directories to the correct directory with Main.py.
-3.) Ensure that correct dependencies are installed (mysql.connector, pandas,Faker)
-4.) Run using the format: python Main.py [option] [filename] [number of records*]
-5.) [Option] - generate (create new data to csv), import (used to import all data to normalized db)
-6.) [Filename] (name of the csv file including extension)
-7.) [Number of records] - only needed if populating data to specify how many rows to populate.
+3.) Ensure that correct dependencies are installed (mysql.connector, pandas,numpy,Faker)
+4.) Before running, open the file DbHelper.py and edit the information displayed to match your Google Cloud Platform
+instance information.  This program assumes you have an instance already running.
+5.) Run the ddl.sql file provided in your database console to create the necessary tables to interact with the data import functionality.
+6.) Run the application using the format: python Main.py [option] [filename] [number of records*]
+7.) [Option] - 'generate' (create new data for given csv), 'import' (used to import all data to normalized db)
+8.) [Filename] (name of the csv file including extension)
+9.) [Number of records*] - only needed if populating data to specify how many rows to populate.
